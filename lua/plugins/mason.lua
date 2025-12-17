@@ -13,6 +13,7 @@ return {
       "prismals",
       "pyright",
       "eslint",
+      "lemminx",
       "rust_analyzer",
       "dockerls",
       "yamlls",
@@ -45,6 +46,8 @@ return {
             "stylelint",
             "markdownlint",
             "shellcheck",
+            "swiftlint",
+            "ktlint",
           }
 
           for _, package_name in ipairs(packages_to_install) do
