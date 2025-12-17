@@ -76,19 +76,24 @@ if [[ "$OS" == "macos" ]]; then
   else
     echo "✅ Nerd Font already installed"
   fi
-  
+
 elif [[ "$OS" == "linux" ]]; then
   FONT_DIR="$HOME/.local/share/fonts"
   if [ ! -f "$FONT_DIR/JetBrainsMonoNerdFont-Regular.ttf" ]; then
     echo "🔤 Installing JetBrains Mono Nerd Font..."
     mkdir -p "$FONT_DIR"
-    cd /tmp
-    curl -fLo JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
-    unzip -q JetBrainsMono.zip -d JetBrainsMono
-    cp JetBrainsMono/*.ttf "$FONT_DIR/"
+    
+    # Download only essential font variants
+    curl -fLo "$FONT_DIR/JetBrainsMonoNerdFont-Regular.ttf" \
+      https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf
+    curl -fLo "$FONT_DIR/JetBrainsMonoNerdFont-Bold.ttf" \
+      https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/JetBrainsMono/Ligatures/Bold/JetBrainsMonoNerdFont-Bold.ttf
+    curl -fLo "$FONT_DIR/JetBrainsMonoNerdFont-Italic.ttf" \
+      https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/JetBrainsMono/Ligatures/Italic/JetBrainsMonoNerdFont-Italic.ttf
+    curl -fLo "$FONT_DIR/JetBrainsMonoNerdFont-BoldItalic.ttf" \
+      https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/JetBrainsMono/Ligatures/BoldItalic/JetBrainsMonoNerdFont-BoldItalic.ttf
+    
     fc-cache -fv
-    rm -rf JetBrainsMono JetBrainsMono.zip
-    cd - > /dev/null
     echo "✅ Nerd Font installed"
   else
     echo "✅ Nerd Font already installed"
@@ -120,4 +125,18 @@ fi
 
 echo ""
 echo "✅ Setup complete!"
-echo "🔄 Restart your terminal to apply changes."
+echo ""
+if [[ "$OS" == "macos" ]]; then
+  echo "📝 Next steps:"
+  echo "   1. Open Terminal preferences"
+  echo "   2. Go to Profiles → Text → Font"
+  echo "   3. Select 'JetBrainsMono Nerd Font'"
+  echo "   4. Restart terminal"
+elif [[ "$OS" == "linux" ]]; then
+  echo "📝 Next steps:"
+  echo "   1. Open your terminal preferences"
+  echo "   2. Change font to 'JetBrainsMono Nerd Font'"
+  echo "   3. Restart terminal"
+fi
+echo ""
+echo "🔄 Run 'nvim' to start using your new config!"
