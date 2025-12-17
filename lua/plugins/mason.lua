@@ -14,6 +14,7 @@ return {
       "pyright",
       "eslint",
       "lemminx",
+      "rust_analyzer",
     },
   },
   dependencies = {
