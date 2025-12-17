@@ -14,6 +14,8 @@ return {
       "pyright",
       "eslint",
       "rust_analyzer",
+      "dockerls",
+      "yamlls",
     },
   },
   dependencies = {
@@ -35,7 +37,7 @@ return {
           local packages_to_install = {
             "eslint_d",
             "tflint",
-            "hadolint",
+            -- "hadolint",
             "golangci-lint",
             "jsonlint",
             "yamllint",

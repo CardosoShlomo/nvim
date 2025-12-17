@@ -5,7 +5,7 @@ return {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
     opts = {
-      mapping = { "jk" },
+      mapping = { "jk", "JK" },
       timeout = 200,
       clear_empty_lines = false,
       keys = "<Esc>",
@@ -48,7 +48,7 @@ return {
         auto_install = true,
         ensure_installed = {
           "lua", "javascript", "typescript", "tsx", "json", "yaml", "html", "css",
-          "dart", "go", "rust", "dockerfile", "terraform",
+          "dart", "go", "rust", --[[ "dockerfile", ]] "terraform",
           "markdown", "markdown_inline", "bash", "regex",
         },
       })
@@ -67,7 +67,7 @@ return {
         javascriptreact = { "eslint_d" },
         typescriptreact = { "eslint_d" },
         terraform = { "tflint" },
-        dockerfile = { "hadolint" },
+        -- dockerfile = { "hadolint" },
         go = { "golangci-lint" },
         rust = { "clippy" },
         json = { "jsonlint" },
