@@ -68,6 +68,33 @@ elif [[ "$OS" == "linux" ]]; then
   fi
 fi
 
+# --- Install Nerd Font ---
+if [[ "$OS" == "macos" ]]; then
+  if ! brew list --cask font-jetbrains-mono-nerd-font &> /dev/null; then
+    echo "🔤 Installing JetBrains Mono Nerd Font..."
+    brew install --cask font-jetbrains-mono-nerd-font
+  else
+    echo "✅ Nerd Font already installed"
+  fi
+  
+elif [[ "$OS" == "linux" ]]; then
+  FONT_DIR="$HOME/.local/share/fonts"
+  if [ ! -f "$FONT_DIR/JetBrainsMonoNerdFont-Regular.ttf" ]; then
+    echo "🔤 Installing JetBrains Mono Nerd Font..."
+    mkdir -p "$FONT_DIR"
+    cd /tmp
+    curl -fLo JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
+    unzip -q JetBrainsMono.zip -d JetBrainsMono
+    cp JetBrainsMono/*.ttf "$FONT_DIR/"
+    fc-cache -fv
+    rm -rf JetBrainsMono JetBrainsMono.zip
+    cd - > /dev/null
+    echo "✅ Nerd Font installed"
+  else
+    echo "✅ Nerd Font already installed"
+  fi
+fi
+
 # --- Initialize zoxide for current shell ---
 SHELL_RC=""
 if [ -n "$ZSH_VERSION" ]; then
