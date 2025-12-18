@@ -1,3 +1,10 @@
+# Check for admin rights
+if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+    Write-Host "⚠️  This script requires Administrator privileges." -ForegroundColor Red
+    Write-Host "Please right-click PowerShell and select 'Run as Administrator'" -ForegroundColor Yellow
+    exit
+}
+
 Write-Host "🚀 Starting bootstrap setup for Windows..." -ForegroundColor Cyan
 
 # --- Check if Chocolatey is installed ---
@@ -14,8 +21,10 @@ if (!(Get-Command choco -ErrorAction SilentlyContinue)) {
 Write-Host "📦 Installing development tools..." -ForegroundColor Yellow
 choco install -y git neovim nodejs lazygit ripgrep fd fzf bat zoxide
 
-# --- Check for Nerd Font (4 variants only) ---
-$fontDir = "$env:LOCALAPPDATA\Microsoft\Windows\Fonts"
+# --- Check for Nerd Font (check system fonts, not just user fonts) ---
+$systemFontDir = "C:\Windows\Fonts"
+$userFontDir = "$env:LOCALAPPDATA\Microsoft\Windows\Fonts"
+
 $requiredFonts = @(
     "JetBrainsMonoNLNerdFont-Regular.ttf",
     "JetBrainsMonoNLNerdFont-Bold.ttf",
@@ -23,48 +32,25 @@ $requiredFonts = @(
     "JetBrainsMonoNLNerdFont-BoldItalic.ttf"
 )
 
+# Check both system and user font directories
 $allInstalled = $true
 foreach ($font in $requiredFonts) {
-    if (!(Test-Path "$fontDir\$font")) {
+    if (!(Test-Path "$systemFontDir\$font") -and !(Test-Path "$userFontDir\$font")) {
         $allInstalled = $false
         break
     }
 }
 
 if (!$allInstalled) {
-    Write-Host "🔤 Installing JetBrains Mono NL Nerd Font (4 variants)..." -ForegroundColor Yellow
-    
-    $tempDir = "$env:TEMP\nerd-fonts"
-    New-Item -ItemType Directory -Force -Path $tempDir | Out-Null
-    
-    # Download only the 4 essential variants
-    $baseUrl = "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/JetBrainsMono/Ligatures"
-    $fonts = @(
-        "$baseUrl/Regular/JetBrainsMonoNLNerdFont-Regular.ttf",
-        "$baseUrl/Bold/JetBrainsMonoNLNerdFont-Bold.ttf",
-        "$baseUrl/Italic/JetBrainsMonoNLNerdFont-Italic.ttf",
-        "$baseUrl/BoldItalic/JetBrainsMonoNLNerdFont-BoldItalic.ttf"
-    )
-    
-    foreach ($fontUrl in $fonts) {
-        $fontName = Split-Path $fontUrl -Leaf
-        $fontPath = "$tempDir\$fontName"
-        Write-Host "  Downloading $fontName..." -ForegroundColor Gray
-        Invoke-WebRequest -Uri $fontUrl -OutFile $fontPath
-        
-        # Install font
-        $fonts = (New-Object -ComObject Shell.Application).Namespace(0x14)
-        $fonts.CopyHere($fontPath, 0x10)
-    }
-    
-    Remove-Item -Recurse -Force $tempDir
+    Write-Host "🔤 Installing JetBrains Mono NL Nerd Font via Chocolatey..." -ForegroundColor Yellow
+    choco install -y jetbrainsmono-nerd-font
     Write-Host "✅ Nerd Font installed" -ForegroundColor Green
 } else {
-    Write-Host "✅ All 4 Nerd Font variants already installed" -ForegroundColor Green
+    Write-Host "✅ Nerd Font already installed" -ForegroundColor Green
 }
 
 # --- Initialize zoxide for PowerShell ---
-$profilePath = $PROFILE
+$profilePath = $PROFILE.CurrentUserAllHosts
 if (!(Test-Path $profilePath)) {
     New-Item -Path $profilePath -ItemType File -Force | Out-Null
 }
@@ -90,7 +76,6 @@ Write-Host "✅ Setup complete!" -ForegroundColor Green
 Write-Host ""
 Write-Host "📝 Next steps:" -ForegroundColor Cyan
 Write-Host "   1. Restart PowerShell/Windows Terminal" -ForegroundColor White
-Write-Host "   2. In Windows Terminal settings (Ctrl+,):" -ForegroundColor White
-Write-Host "      - Go to your profile (Ubuntu/PowerShell)" -ForegroundColor White
-Write-Host "      - Appearance → Font face → Select 'JetBrainsMonoNL Nerd Font Mono'" -ForegroundColor White
+Write-Host "   2. Font should be auto-detected, but verify in:" -ForegroundColor White
+Write-Host "      Windows Terminal → Settings (Ctrl+,) → Profile → Appearance → Font" -ForegroundColor White
 Write-Host "   3. Run 'nvim' to start" -ForegroundColor White
