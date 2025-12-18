@@ -2,7 +2,7 @@
 if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
     Write-Host "⚠️  This script requires Administrator privileges." -ForegroundColor Red
     Write-Host "Please right-click PowerShell and select 'Run as Administrator'" -ForegroundColor Yellow
-    exit
+    return
 }
 
 Write-Host "🚀 Starting bootstrap setup for Windows..." -ForegroundColor Cyan
