@@ -10,7 +10,7 @@ return {
       typescriptreact = { "eslint_d" },
       terraform = { "tflint" },
       dockerfile = { "hadolint" },
-      go = { "golangci-lint" },
+      go = { "golangcilint" },
       rust = { "clippy" },
       json = { "jsonlint" },
       yaml = { "yamllint" },
