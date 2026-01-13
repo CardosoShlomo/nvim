@@ -17,6 +17,7 @@ return {
       "rust_analyzer",
       "dockerls",
       "yamlls",
+      "gopls",
     },
   },
   dependencies = {
