@@ -10,7 +10,4 @@ map("n", "<leader>e", "<cmd>Oil<cr>", { desc = "Open parent directory" })
 map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
 map("n", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer Diagnostics" })
 map("n", "<leader>xq", "<cmd>Trouble quickfix toggle<cr>", { desc = "Quickfix List" })
-
--- Flash keybindings
-map({ "n", "x", "o" }, "s", function() require("flash").jump() end, { desc = "Flash jump" })
-map({ "n", "x", "o" }, "S", function() require("flash").treesitter() end, { desc = "Flash Treesitter" })
+map("n", "U", "<C-r>", { desc = "Redo" })
