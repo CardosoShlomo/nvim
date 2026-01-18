@@ -1,11 +1,17 @@
--- Escape insert mode with jk
+-- Escape insert mode with jk, kj, JK, KJ
 return {
   "max397574/better-escape.nvim",
   event = "InsertEnter",
   opts = {
-    mapping = { "jk" },
     timeout = 200,
-    clear_empty_lines = false,
-    keys = "<Esc>",
+    default_mappings = false,
+    mappings = {
+      i = {
+        j = { k = "<Esc>" },
+        k = { j = "<Esc>" },
+        J = { K = "<Esc>" },
+        K = { J = "<Esc>" },
+      },
+    },
   },
 };

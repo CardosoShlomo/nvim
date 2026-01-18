@@ -3,55 +3,46 @@ return {
   "nvim-telescope/telescope.nvim",
   tag = "0.1.8",
   dependencies = { "nvim-lua/plenary.nvim" },
-  config = function()
-    -- Telescope fullscreen configuration
-    require("telescope").setup({
-      defaults = {
-        layout_strategy = "horizontal",
-        layout_config = {
-          height = 0.99,
-          width = 0.99,
-          preview_width = 0.6,
-        },
-        sorting_strategy = "ascending",
-        file_ignore_patterns = { "node_modules", "%.git/", "%.dart_tool/", "build/", "%.idea/" },
-      },
-    })
-
-    local builtin = require("telescope.builtin")
-
+  keys = {
     -- File & Content Search
-    vim.keymap.set("n", "ff", builtin.find_files, { desc = "Find files by name" })
-    vim.keymap.set("n", "fg", builtin.live_grep, { desc = "Search text in all files (live grep)" })
-    vim.keymap.set("n", "fb", builtin.buffers, { desc = "Switch between open buffers" })
-    vim.keymap.set("n", "fr", builtin.oldfiles, { desc = "Recently opened files" })
-    vim.keymap.set("n", "f/", builtin.current_buffer_fuzzy_find, { desc = "Fuzzy search in current file" })
-    vim.keymap.set("n", "fw", builtin.grep_string, { desc = "Search word under cursor in all files" })
-
-    -- LSP Symbol Search (Classes, Functions, etc.)
-    vim.keymap.set("n", "fs", builtin.lsp_document_symbols, { desc = "Find symbols (class/function) in current file" })
-    vim.keymap.set("n", "fS", builtin.lsp_workspace_symbols, { desc = "Find symbols in entire workspace" })
-    vim.keymap.set("n", "fi", builtin.lsp_implementations, { desc = "Find all implementations of interface/abstract" })
-    vim.keymap.set("n", "fR", builtin.lsp_references, { desc = "Find all references to symbol" })
-    vim.keymap.set("n", "fT", builtin.lsp_type_definitions, { desc = "Go to type definition" })
-
+    { "sf", function() require("telescope.builtin").find_files() end, desc = "Search files" },
+    { "sg", function() require("telescope.builtin").live_grep() end, desc = "Search grep" },
+    { "sb", function() require("telescope.builtin").buffers() end, desc = "Search buffers" },
+    { "sr", function() require("telescope.builtin").oldfiles() end, desc = "Search recent" },
+    { "s/", function() require("telescope.builtin").current_buffer_fuzzy_find() end, desc = "Search in file" },
+    { "sw", function() require("telescope.builtin").grep_string() end, desc = "Search word under cursor" },
+    -- LSP Symbol Search
+    { "sy", function() require("telescope.builtin").lsp_document_symbols() end, desc = "Search symbols" },
+    { "sY", function() require("telescope.builtin").lsp_workspace_symbols() end, desc = "Search workspace symbols" },
+    { "si", function() require("telescope.builtin").lsp_implementations() end, desc = "Search implementations" },
+    { "sR", function() require("telescope.builtin").lsp_references() end, desc = "Search references" },
+    { "sT", function() require("telescope.builtin").lsp_type_definitions() end, desc = "Search type definitions" },
     -- Diagnostics & Help
-    vim.keymap.set("n", "fd", builtin.diagnostics, { desc = "Show all errors/warnings in project" })
-    vim.keymap.set("n", "fh", builtin.help_tags, { desc = "Search Neovim help documentation" })
-    vim.keymap.set("n", "fk", builtin.keymaps, { desc = "Show all keybindings" })
-    vim.keymap.set("n", "fc", builtin.commands, { desc = "Search all available commands" })
-
+    { "sd", function() require("telescope.builtin").diagnostics() end, desc = "Search diagnostics" },
+    { "sh", function() require("telescope.builtin").help_tags() end, desc = "Search help" },
+    { "sk", function() require("telescope.builtin").keymaps() end, desc = "Search keymaps" },
+    { "sc", function() require("telescope.builtin").commands() end, desc = "Search commands" },
     -- Navigation History
-    vim.keymap.set("n", "fj", builtin.jumplist, { desc = "Show jump history (where you've been)" })
-    vim.keymap.set("n", "fm", builtin.marks, { desc = "Show all bookmarks/marks" })
-    vim.keymap.set("n", "fq", builtin.quickfix, { desc = "Show quickfix list" })
-
-    -- Git Integration
-    vim.keymap.set("n", "<leader>gc", builtin.git_commits, { desc = "Browse git commit history" })
-    vim.keymap.set("n", "<leader>gs", builtin.git_status, { desc = "Show modified/staged files (git status)" })
-    vim.keymap.set("n", "<leader>gb", builtin.git_branches, { desc = "List and switch git branches" })
-    vim.keymap.set("n", "<leader>gf", builtin.git_files, { desc = "Find files tracked by git only" })
-    vim.keymap.set("n", "<leader>gS", builtin.git_stash, { desc = "Browse git stashes" })
-
-  end,
+    { "sj", function() require("telescope.builtin").jumplist() end, desc = "Search jumplist" },
+    { "sm", function() require("telescope.builtin").marks() end, desc = "Search marks" },
+    { "sq", function() require("telescope.builtin").quickfix() end, desc = "Search quickfix" },
+    -- Git
+    { "<leader>gc", function() require("telescope.builtin").git_commits() end, desc = "Git commits" },
+    { "<leader>gs", function() require("telescope.builtin").git_status() end, desc = "Git status" },
+    { "<leader>gb", function() require("telescope.builtin").git_branches() end, desc = "Git branches" },
+    { "<leader>gf", function() require("telescope.builtin").git_files() end, desc = "Git files" },
+    { "<leader>gS", function() require("telescope.builtin").git_stash() end, desc = "Git stash" },
+  },
+  opts = {
+    defaults = {
+      layout_strategy = "horizontal",
+      layout_config = {
+        height = 0.99,
+        width = 0.99,
+        preview_width = 0.6,
+      },
+      sorting_strategy = "ascending",
+      file_ignore_patterns = { "node_modules", "%.git/", "%.dart_tool/", "build/", "%.idea/" },
+    },
+  },
 }

@@ -1,5 +1,8 @@
 local map = vim.keymap.set
 
+-- Make s trigger which-key for search prefix
+map("n", "s", function() require("which-key").show("s") end, { desc = "Search" })
+
 -- Quick access to init.lua
 -- map("n", "<leader><leader>", ":e $MYVIMRC<CR>", { desc = "Open init.lua" })
 
