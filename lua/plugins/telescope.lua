@@ -39,7 +39,9 @@ return {
       layout_config = {
         height = 0.99,
         width = 0.99,
-        preview_width = 0.6,
+        horizontal = {
+          preview_width = 0.6,
+        },
       },
       sorting_strategy = "ascending",
       file_ignore_patterns = { "node_modules", "%.git/", "%.dart_tool/", "build/", "%.idea/" },
