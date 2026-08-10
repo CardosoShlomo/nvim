@@ -7,7 +7,7 @@ map("n", "s", function() require("which-key").show("s") end, { desc = "Search" }
 -- map("n", "<leader><leader>", ":e $MYVIMRC<CR>", { desc = "Open init.lua" })
 
 -- Oil file explorer
-map("n", "S", "<cmd>Oil<cr>", { desc = "Open parent directory" })
+map("n", "t", "<cmd>Oil<cr>", { desc = "Open parent directory" })
 
 -- Leaving: neither discards. :qa refuses while anything is modified, :wqa saves.
 map("n", "q", "<cmd>qa<cr>", { desc = "Quit all" })
