@@ -1,0 +1,1 @@
+/Users/shlomocardoso/Projects/pok/editors/nvim/ftdetect/pok.vim

@@ -3,6 +3,8 @@
 -- Basic Settings
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
+-- pok files outside the checkout (arena etc.) resolve the engine here
+vim.g.pok_repo = vim.fn.expand("~/Projects/pok")
 vim.opt.number = true
 vim.opt.relativenumber = true
 
